@@ -1,5 +1,26 @@
 //: Playground - noun: a place where people can play
 
-import UIKit
+class Student {
+    
+    var firstName : String
+    var lastName : String
+    
+    var fullName : String {
+        return firstName + " " + lastName
+    }
+    
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    
+}
 
-var str = "Hello, playground"
+class Cow {
+    var name : String?
+    
+}
+
+struct Grass {
+    var type : String
+}
