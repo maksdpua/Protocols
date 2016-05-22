@@ -24,3 +24,5 @@ class Cow {
 struct Grass {
     var type : String
 }
+
+
