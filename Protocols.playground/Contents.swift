@@ -6,11 +6,24 @@ protocol Priority {
 }
 
 protocol EntryName : Priority {
-    var label : String {get}
     
+    var label : String { get }
+    mutating func printLabel()
+    
+    init(name: String)
 }
 
-class Student : EntryName {
+class Farmer : EntryName {
+    
+    func printLabel() {
+        firstName += " newName"
+        print(firstName + " farmer")
+    }
+    
+    required init(name: String) {
+        self.firstName = name
+        self.lastName = "Shmobs"
+    }
     
     var firstName : String
     var lastName : String
@@ -37,6 +50,15 @@ class Animal {
 }
 
 class Cow : EntryName {
+    
+    func printLabel() {
+        print("Cow label " + label)
+    }
+    
+    required init(name: String) {
+        self.name = name
+    }
+    
     var name : String?
     
     var label: String {
@@ -48,53 +70,67 @@ class Cow : EntryName {
 }
 
 struct Grass : EntryName {
+    
+    func printLabel() {
+        print("This is grass")
+    }
+    
+    init(name: String) {
+        type = name
+    }
+    
+    init(type: String) {
+        self.type = type
+    }
+    
     var type : String
     var label: String {
-        return "Grass " + type
+        return "Grass: " + type
     }
     
     let order = 3
 }
 
-let student1 = Student(firstName: "Bob", lastName: "Shmob")
-let student2 = Student(firstName: "Bill", lastName: "Shmill")
-let student3 = Student(firstName: "Brian", lastName: "Shmian")
+let farmer1 = Farmer(firstName: "Bob", lastName: "Shmob")
+let farmer2 = Farmer(firstName: "Bill", lastName: "Shmill")
+let farmer3 = Farmer(firstName: "Brian", lastName: "Shmian")
 
-let cow1 = Cow()
-cow1.name = "Burenka"
-let cow2 = Cow()
+let cow1 = Cow(name: "Burenka")
+let cow2 = Cow(name: "Maria")
 
-let grass1 = Grass(type: "Bermuda")
-let grass2 = Grass(type: "St. Augustine")
+let grass1 = Grass(name: "Bermuda")
+let grass2 = Grass(name: "St. Augustine")
 
-var array : [EntryName] =
-[cow1, student1, grass2, cow2, student3, grass1, student2]
+
 
 /*
 for value in array {
     
 //    if let grass = value as? Grass {
 //        print(grass.type)
-//    } else if let student = value as? Student {
-//        print(student.fullName)
+//    } else if let farmer = value as? farmer {
+//        print(farmer.fullName)
 //    } else if let cow = value as? Cow {
 //        print(cow.name ?? "a cow")
 //    }
     
     switch value {
     case let grass as Grass: print(grass.type)
-    case let student as Student: print(student.fullName)
+    case let farmer as farmer: print(farmer.fullName)
     case let cow as Cow: print(cow.name ?? "just a cow")
     default: break
     }
 }
 */
 
-func printFarm(array: [EntryName]) {
-    
-    array.sort({a, b in
+var array : [EntryName] =
+    [cow1, farmer1, grass2, cow2, farmer3, grass1, farmer2]
+
+func printFarm(inout array: [EntryName]) {
+
+    array.sortInPlace({a, b in
         if a.order == b.order {
-            return a.label.lowercaseString < b.label
+            return a.label.lowercaseString < b.label.lowercaseString
         } else {
             return a.order < b.order
         }
@@ -105,4 +141,19 @@ func printFarm(array: [EntryName]) {
     }
 }
 
-printFarm(array)
+
+
+printFarm(&array)
+
+print("-----------")
+
+grass2.printLabel()
+farmer1.printLabel()
+cow2.printLabel()
+
+farmer1.fullName
+
+var someAnimal : EntryName = Cow(name: "someAnimal")
+
+Int.max
+Int.min
